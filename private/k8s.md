@@ -1,0 +1,29 @@
+- pod
+  - Kubelet 负责本地的 pod 维护
+  - kube-proxy 多个 pod 之间的负载均衡
+  - pod 独立的沙箱系统
+  - pod 容器必须按先创建的 pause 容器，用来共享网络，共享存储，使用localhost访问本地服务
+  - 有自己的独立虚拟ip
+  - 没有对应实体（物理机，物理网卡）对应
+  - 无法直接对外提供服务访问，通过映射端口
+  - 多个 pod 里面的数据库如何共用同一个数据？
+- ReplicaSet 副本控制器，控制 pod 副本的数量 
+  - ReplicationController 
+  - ReplicaSet
+- Deployment
+  - 部署无状态服务？
+- StatefulSet
+  - 部署有状态服务
+  - 借助 pvc 文件系统
+  - 保证pod挂掉重新建立后，hostname 不会发生变化，pod通过hostname来管理数据
+- Service
+  - 负载均衡，解决服务发现
+  - pod Ip
+  - node ip
+  - cluster ip 抽象的 service 对象（VIP，虚拟ip）
+  - 不能直接对提供服务
+  - service 和 pod 直接通信（局域网）
+  - service 利用 iptables，ipvs 做数据包分发
+  - 通过标签选择器选出一组pod创建一个 service，endpoints 存储了所选的pod的所有 ip
+  - node节点里面的 kube-proxy 监听所有 pod ，发生变化就更新 service endpoints里面的ip，实现服务发现
+
